@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block content %}
+<h1 class="mb-4">Passbook for {{ user.username }}</h1>
+<h2 class="mt-4">Net Balance: INR {{ net_balance }}</h2>
+<h2 class="mb-3">Your Balances:</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Amount (INR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Balances Sent:</td>
+                <td>
+                    <ul>
+                        {% for balance in balances_sent %}
+                        <li>{{ balance.to_user.username }} - {{ balance.amount }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Balances Received:</td>
+                <td>
+                    <ul>
+                        {% for balance in balances_received %}
+                        <li>{{ balance.from_user.username }} - {{ balance.amount }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2 class="mt-4">Transaction History:</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount (INR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in transaction_history %}
+            <tr>
+                <td>{{ expense.created_at }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

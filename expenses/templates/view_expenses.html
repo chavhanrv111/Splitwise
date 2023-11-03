@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5">
+    <h1>View Expenses</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Paid By</th>
+                <th>Amount</th>
+                <th>Participants</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.paid_by }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>
+                    {% for participant in expense.participants.all %} {{ participant.username }} {% if not forloop.last %}, {% endif %} {% endfor %}
+                </td>
+                <!-- Add more table cells for other expense details -->
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No expenses to display.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

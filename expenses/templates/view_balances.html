@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5">
+    <h1>View Balances</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>From User</th>
+                <th>To User</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for balance in balances %}
+            <tr>
+                <td>{{ balance.from_user__username }}</td>
+                <td>{{ balance.to_user__username }}</td>
+                <td>{{ balance.total_amount|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No balance to display.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

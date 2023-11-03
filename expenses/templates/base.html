@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splitwise</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS for styling -->
+    <style>
+        /* Sidebar styling */
+        
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            padding-top: 1rem;
+        }
+        
+        #sidebar .nav-item {
+            margin: 0;
+            border: 0;
+        }
+        
+        #sidebar .nav-link {
+            color: #333;
+            border-radius: 0;
+        }
+        
+        #sidebar .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        /* #sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        } */
+        /* Main content padding to accommodate the fixed sidebar */
+        
+        #main-content {
+            margin-left: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% if active == 'home' %} active {% endif %}
+                          " href="/expenses/home/">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active == 'add_expense' %} active {% endif %}" href="/expenses/add_expense/">
+                               Add Expenses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active == 'view_expenses' %} active {% endif %}" href="/expenses/view_expenses/">
+                               View Expenses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active == 'view_balances' %} active {% endif %}" href="/expenses/view_balances/">
+                               View Balance
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active == 'passbook' %} active {% endif %}" href="/expenses/passbook/">
+                               View Passbook
+                            </a>
+                        </li>
+
+                        <!-- Add more sidebar items as needed -->
+                    </ul>
+                    <br>
+
+                    <a class=" btn btn-danger btn-sm" href="/expenses/logout_user/">
+                        Logout
+                    </a>
+                </div>
+            </nav>
+            <!-- Main Content -->
+            <main id="main-content" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <!-- Your page content goes here -->
+                {% block content %} {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript (jQuery and Popper.js are required) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById("expense_type").addEventListener("change", function() {
+            var selectedExpenseType = this.value;
+            document.getElementById("exact-amount").style.display = selectedExpenseType === "EXACT" ? "block" : "none";
+            document.getElementById("percent-amount").style.display = selectedExpenseType === "PERCENT" ? "block" : "none";
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5">
+    <h1>Add Expense</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" id="description" name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" class="form-control" id="amount" name="amount" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="expense_type">Expense Type:</label>
+            <select class="form-control" id="expense_type" name="expense_type" required>
+                <option value="EQUAL">Equal</option>
+                <option value="EXACT">Exact</option>
+                <option value="PERCENT">Percent</option>
+            </select>
+        </div>
+        <div class="form-group" id="exact-amount" style="display: none;">
+            <label for="exact_shares">Exact Shares:</label>
+            <input type="text" class="form-control" id="exact_shares" name="exact_shares">
+            <small class="text-muted">Enter shares in the format: User1:amount1, User2:amount2, ...</small>
+        </div>
+        <div class="form-group" id="percent-amount" style="display: none;">
+            <label for="percent_shares">Percentage Shares:</label>
+            <input type="text" class="form-control" id="percent_shares" name="percent_shares">
+            <small class="text-muted">Enter shares in the format: User1:percent1%, User2:percent2%, ...</small>
+        </div>
+        <div class="form-group">
+            <label for="paid_by">Paid By:</label>
+            <select class="form-control" id="paid_by" name="paid_by" required>
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="participants">Participants:</label>
+            <select class="form-control" id="participants" name="participants[]" multiple required>
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit Expense</button>
+    </form>
+</div>
+{% endblock %}
